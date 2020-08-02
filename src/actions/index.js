@@ -2,6 +2,7 @@ import axios from "axios";
 export const FETCH_POST = "FETCH_POST";
 export const CREATE_POST = "CREATE_POST";
 export const GET_POST = "GET_POST";
+export const DELETE_POST = "DELETE_POST";
 import _ from "lodash";
 
 const api = "http://reduxblog.herokuapp.com/api";
@@ -35,9 +36,14 @@ export const createPost = (value, callback) => (dispatch) => {
 };
 
 export const getPost = (id) => (dispatch) => {
-  console.log(id, "called from action");
   axios.get(`${api}/posts/${id}${api_key}`).then((res) => {
-    console.log(res);
     dispatch({ type: "GET_POST", payload: res });
+  });
+};
+
+export const deletePost = (id, callback) => (dispatch) => {
+  axios.delete(`${api}/posts/${id}${api_key}`).then(() => {
+    dispatch({ type: "DELETE_POST", payload: id });
+    callback();
   });
 };

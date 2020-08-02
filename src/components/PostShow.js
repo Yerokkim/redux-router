@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getPost } from "../actions";
+import { getPost, deletePost } from "../actions";
 import { Link } from "react-router-dom";
 const PostShow = (props) => {
   useEffect(() => {
@@ -12,8 +12,11 @@ const PostShow = (props) => {
 
   const deleteItem = () => {
     const id = props.match.params.id;
-    props.deletePost(id);
+    props.deletePost(id, () => {
+      props.history.push("/");
+    });
   };
+
   if (!props.post) {
     return <div>Loading...</div>;
   }
@@ -34,4 +37,4 @@ const mapStateToProps = ({ posts }, ownProps) => ({
   post: posts[ownProps.match.params.id],
 });
 
-export default connect(mapStateToProps, { getPost })(PostShow);
+export default connect(mapStateToProps, { getPost, deletePost })(PostShow);

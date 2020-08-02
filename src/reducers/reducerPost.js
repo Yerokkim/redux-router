@@ -1,4 +1,4 @@
-import { FETCH_POST, GET_POST } from "../actions";
+import { FETCH_POST, GET_POST, DELETE_POST } from "../actions";
 import _ from "lodash";
 
 const initialState = {
@@ -6,6 +6,9 @@ const initialState = {
 };
 export default function (state = initialState, actions) {
   switch (actions.type) {
+    case DELETE_POST:
+      return _.omit(state, actions.payload);
+
     case GET_POST:
       return {
         ...state,
